@@ -1,5 +1,6 @@
 import type { Product } from '../../types/Product'
 import { useCart } from '../../context/CartContext'
+import { useNavigate } from 'react-router-dom'
 
 type ProductCardProps = {
   product: Product
@@ -7,9 +8,13 @@ type ProductCardProps = {
 
 function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart()
+  const navigate = useNavigate()
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col">
+    <div 
+      onClick={() => navigate(`/product/${product.id}`)}
+      className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col cursor-pointer"
+    >
       
       <div className="bg-gray-50 p-6 flex items-center justify-center h-52">
         <img
@@ -33,7 +38,10 @@ function ProductCard({ product }: ProductCardProps) {
             ${product.price}
           </span>
           <button
-            onClick={() => addToCart(product)}
+            onClick={(e) => {
+              e.stopPropagation()
+              addToCart(product)
+            }}
             className="bg-blue-700 hover:bg-blue-800 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors duration-200"
           >
             افزودن
