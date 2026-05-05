@@ -25,7 +25,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
         setIsLoggedIn(true)
         setUser(payload.email)
 
-        fetch('http://localhost:5000/api/auth/me', {
+        fetch('https://digishop-server.onrender.com/api/auth/me', {
           headers: { Authorization:` Bearer ${token} `}
         })
           .then(res => res.json())
@@ -43,7 +43,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
         return
       }
 
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch('https://digishop-server.onrender.com/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -20,7 +20,7 @@ function CartProvider({ children }: { children: React.ReactNode }) {
     if (!token) return
 
     try {
-      const res = await fetch('http://localhost:5000/api/cart', {
+      const res = await fetch('https://digishop-server.onrender.com/api/cart', {
         headers: { Authorization:` Bearer ${token} `}
       })
       const data = await res.json()
@@ -49,7 +49,7 @@ function CartProvider({ children }: { children: React.ReactNode }) {
     if (!token) return
 
     try {
-      const res = await fetch('http://localhost:5000/api/cart/add', {
+      const res = await fetch('https://digishop-server.onrender.com/api/cart/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ function CartProvider({ children }: { children: React.ReactNode }) {
     if (!token) return
 
     try {
-      const res = await fetch(`http://localhost:5000/api/cart/remove/${id}`, {
+      const res = await fetch(`https://digishop-server.onrender.com/api/cart/remove/${id}`, {
         method: 'DELETE',
         headers: { Authorization:` Bearer ${token} `}
       })
