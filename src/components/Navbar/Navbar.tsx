@@ -1,11 +1,16 @@
 import { useState } from 'react'
-import { ShoppingCart, User } from 'lucide-react'
+import { ShoppingCart, User, Search } from 'lucide-react'
 import { useCart } from '../../context/CartContext'
 import { useAuth } from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import CartModal from '../CartModal/cartModal'
 
-function Navbar() {
+type NavbarProps = {
+  search?: string
+  setSearch?: (value: string) => void
+}
+
+function Navbar({ search = '', setSearch }: NavbarProps) {
   const { cart } = useCart()
   const { isLoggedIn } = useAuth()
   const [isOpen, setIsOpen] = useState(false)
@@ -21,6 +26,20 @@ function Navbar() {
         >
           🛍️ دیجی‌شاپ
         </h1>
+
+        {/* سرچ بار */}
+        {setSearch && (
+          <div className="flex items-center gap-2 bg-gray-100 rounded-xl px-4 py-2 w-80">
+            <Search size={16} className="text-gray-400" />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="جستجوی محصول..."
+              className="bg-transparent text-sm outline-none w-full"
+            />
+          </div>
+        )}
 
         <div className="flex items-center gap-2">
           <button
@@ -63,7 +82,7 @@ function Navbar() {
               </button>
 
               <button
-                onClick={() => navigate('/login')}
+                onClick={() => navigate('/register')}
                 className="bg-blue-700 hover:bg-blue-800 text-white font-medium px-4 py-2 rounded-xl transition-colors"
               >
                 ثبت نام
