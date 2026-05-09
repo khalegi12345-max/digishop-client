@@ -13,7 +13,7 @@ function Product() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    fetch(`https://fakestoreapi.com/products/${id}`)
+    fetch(`https://digishop-server.onrender.com/api/products/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setProduct(data)

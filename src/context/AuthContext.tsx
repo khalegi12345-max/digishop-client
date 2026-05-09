@@ -5,6 +5,7 @@ type AuthContextType = {
   user: string | null
   name: string | null
   error: string | null
+  loading: boolean
   login: (email: string, password: string) => void
   logout: () => void
 }
@@ -16,6 +17,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<string | null>(null)
   const [name, setName] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const token = localStorage.getItem('token')
@@ -26,7 +28,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(payload.email)
 
         fetch('https://digishop-server.onrender.com/api/auth/me', {
-          headers: { Authorization:` Bearer ${token} `}
+          headers: { Authorization: `Bearer ${token}` }
         })
           .then(res => res.json())
           .then(data => setName(data.name))
@@ -34,6 +36,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.removeItem('token')
       }
     }
+    setLoading(false)
   }, [])
 
   const login = async (email: string, password: string) => {
@@ -45,9 +48,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
 
       const response = await fetch('https://digishop-server.onrender.com/api/auth/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
       })
 
@@ -77,7 +78,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, user, name, error, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, user, name, error, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   )
