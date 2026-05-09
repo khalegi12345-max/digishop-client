@@ -10,7 +10,6 @@ import Cart from "./pages/Cart/Cart";
 import Profile from "./pages/Profile/Profile";
 import Product from "./pages/Product/Product";
 import Admin from "./pages/Admin/Admin";
-import AdminRoute from "./components/AdminRoute/AdminRute";
 
 function App() {
   return (
@@ -59,14 +58,6 @@ function App() {
                 <ProtectedRoute>
                   <Admin />
                 </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin"
-              element={
-                <AdminRoute>
-                  <Admin />
-                </AdminRoute>
               }
             />
           </Routes>
